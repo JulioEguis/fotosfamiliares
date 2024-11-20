@@ -53,6 +53,7 @@ main {
 #upload-form {
     display: flex;
     gap: 10px;
+    align-items: center;
 }
 
 #photo-input {
@@ -62,6 +63,7 @@ main {
     border-radius: 5px;
     background: #2c2c3a;
     color: #fff;
+    font-size: 1rem;
 }
 
 #upload-form button {
@@ -71,11 +73,19 @@ main {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: background 0.3s ease, transform 0.2s;
 }
 
 #upload-form button:hover {
     background: #8748a7;
+    transform: translateY(-2px);
+}
+
+/* Mensajes de subida */
+#upload-message {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #f0a500;
 }
 
 /* Galería */
@@ -89,10 +99,20 @@ main {
 
 .gallery {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Ajustar tamaño de las imágenes */
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 15px;
+    position: relative;
 }
 
+/* Placeholder para la galería */
+#gallery-placeholder {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #bdbdbd;
+    padding: 20px;
+}
+
+/* Estilo para las imágenes de la galería */
 .gallery img {
     width: 100%;
     height: auto;
@@ -100,7 +120,7 @@ main {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     cursor: pointer;
     transition: transform 0.3s, box-shadow 0.3s;
-    object-fit: cover; /* Mantener la imagen proporcionada y ajustada */
+    object-fit: cover;
 }
 
 .gallery img:hover {
@@ -123,11 +143,11 @@ footer p {
 /* Estilo para dispositivos móviles */
 @media (max-width: 768px) {
     header h1 {
-        font-size: 2rem; /* Reducir tamaño del título en móvil */
+        font-size: 2rem;
     }
 
     header p {
-        font-size: 1rem; /* Reducir tamaño del subtítulo */
+        font-size: 1rem;
     }
 
     #upload-form {
@@ -139,17 +159,29 @@ footer p {
     }
 
     .gallery {
-        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* Hacer las imágenes más pequeñas en móvil */
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     }
 
     .gallery img {
         max-width: 100%;
-        max-height: 150px; /* Limitar el tamaño de la imagen en dispositivos móviles */
+        max-height: 150px;
     }
 }
 
 @media (max-width: 480px) {
     .gallery img {
-        max-height: 120px; /* Hacer las imágenes más pequeñas en pantallas más pequeñas */
+        max-height: 120px;
+    }
+
+    #upload-section {
+        padding: 15px;
+    }
+
+    #photo-input {
+        font-size: 0.9rem;
+    }
+
+    #upload-form button {
+        font-size: 0.9rem;
     }
 }

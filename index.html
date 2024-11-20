@@ -18,6 +18,8 @@
         <section id="upload-section">
             <h2>Sube tus fotos</h2>
             <form id="upload-form">
+                <!-- Etiqueta para accesibilidad -->
+                <label for="photo-input">Selecciona tus fotos:</label>
                 <input type="file" id="photo-input" accept="image/*" multiple>
                 <button type="button" id="upload-button">Subir Fotos</button>
             </form>
@@ -25,7 +27,10 @@
         </section>
         <section id="gallery-section">
             <h2>Galería</h2>
-            <div id="gallery" class="gallery"></div>
+            <div id="gallery" class="gallery">
+                <!-- Mensaje inicial de la galería -->
+                <p id="gallery-placeholder">Cargando imágenes o la galería está vacía...</p>
+            </div>
         </section>
     </main>
     <footer>
