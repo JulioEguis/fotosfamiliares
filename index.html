@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fotos Familiares</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Fotos Familiares</h1>
+        <p>Sube, visualiza y descarga tus momentos especiales</p>
+    </header>
+    <main>
+        <section id="upload-section">
+            <h2>Sube tus fotos</h2>
+            <form id="upload-form">
+                <input type="file" id="photo-input" accept="image/*" multiple>
+                <button type="button" id="upload-button">Subir Fotos</button>
+            </form>
+            <p id="upload-message"></p>
+            
+        </section>
+        <section id="gallery-section">
+            <h2>Galería</h2>
+            <div id="gallery" class="gallery"></div>
+        </section>
+    </main>
+    <footer>
+        <p>© 2024 Fotos Familiares. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,119 @@
+/* Estilo general */
+html, body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background: #0f0f17;
+    color: #fff;
+}
+
+/* Encabezado */
+header {
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(45deg, #1d3557, #6a0572);
+    width: 100%;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin: 0;
+    color: #fff;
+}
+
+header p {
+    font-size: 1.2rem;
+    color: #bdbdbd;
+}
+
+/* Contenido principal */
+main {
+    flex: 1; /* Permite que el contenido principal ocupe todo el espacio vertical disponible */
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+}
+
+/* Sección de subida */
+#upload-section {
+    background: #161626;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+#upload-section h2 {
+    margin-bottom: 10px;
+    color: #6a0572;
+}
+
+#upload-form {
+    display: flex;
+    gap: 10px;
+}
+
+#photo-input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: #2c2c3a;
+    color: #fff;
+}
+
+#upload-form button {
+    padding: 10px 20px;
+    background: #6a0572;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+#upload-form button:hover {
+    background: #8748a7;
+}
+
+/* Galería */
+#gallery-section {
+    margin-top: 20px;
+}
+
+#gallery-section h2 {
+    color: #6a0572;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.gallery img {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.gallery img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* Pie de página */
+footer {
+    padding: 10px;
+    text-align: center;
+    background: #161626;
+    width: 100%;
+}
+footer p {
+    font-size: 0.9rem;
+    color: #bdbdbd;
+}
