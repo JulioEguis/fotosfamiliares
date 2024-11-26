@@ -14,12 +14,13 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .then(data => {
                 data.forEach(item => {
-                    // Filtrar archivos que sean imágenes JPEG
-                    if (item.type === 'file' && item.download_url.endsWith('.jpeg')) {
+                    // Filtrar archivos que sean imágenes JPEG o JPG
+                    if (item.type === 'file' && (item.download_url.endsWith('.jpeg') || item.download_url.endsWith('.JPG'))) {
                         const img = document.createElement('img');
                         img.src = item.download_url; // URL directa de la imagen
                         img.alt = item.name; // Nombre del archivo como descripción
                         img.classList.add('gallery-item'); // Clase para el estilo
+                        img.addEventListener('click', () => openLightbox(item.download_url)); // Añadir evento para el lightbox
                         gallery.appendChild(img); // Añadir la imagen a la galería
                     }
                 });
@@ -29,17 +30,29 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     };
 
-    // Precarga de una imagen inicial desde GitHub
-    const preloadInitialImage = () => {
-        const initialImageName = '00B43BBE-2EC5-431F-935B-CFFD47DFA717_1_105_c.jpeg';
-        const initialImageUrl = `https://raw.githubusercontent.com/${repoOwner}/${repoName}/main/${folderPath}/${initialImageName}`;
-        
-        const img = document.createElement('img');
-        img.src = initialImageUrl;
-        img.alt = 'Foto inicial';
-        img.classList.add('gallery-item');
-        gallery.appendChild(img);
+    // Función para abrir el lightbox
+    const openLightbox = (imageUrl) => {
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        lightbox.style.display = 'flex'; // Mostrar el lightbox
+        lightboxImg.src = imageUrl; // Establecer la URL de la imagen en el lightbox
     };
+
+    // Función para cerrar el lightbox
+    const closeLightbox = () => {
+        const lightbox = document.getElementById('lightbox');
+        lightbox.style.display = 'none'; // Ocultar el lightbox
+    };
+
+    // Añadir evento para cerrar el lightbox al hacer clic en el fondo oscuro
+    document.getElementById('lightbox').addEventListener('click', (e) => {
+        if (e.target === document.getElementById('lightbox')) {
+            closeLightbox();
+        }
+    });
+
+    // Añadir evento para el botón de cierre (X)
+    document.getElementById('close-lightbox').addEventListener('click', closeLightbox);
 
     // Función para subir fotos localmente
     const handleLocalUpload = () => {
@@ -60,6 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 img.src = e.target.result; // Genera una URL base64 para la imagen
                 img.alt = file.name; // Nombre del archivo local
                 img.classList.add('gallery-item');
+                img.addEventListener('click', () => openLightbox(e.target.result)); // Añadir evento para el lightbox
                 gallery.appendChild(img);
             };
             reader.readAsDataURL(file); // Convierte la imagen a URL base64
@@ -69,7 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Inicialización de funcionalidades
-    preloadInitialImage(); // Precarga la imagen inicial
     loadImagesFromGitHub(); // Carga las imágenes desde el repositorio
 
     // Asignar el evento al botón de subir fotos

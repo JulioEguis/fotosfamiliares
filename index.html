@@ -4,35 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fotos Familiares</title>
-    <!-- Ruta corregida al CSS -->
+    <!-- Ruta al archivo CSS -->
     <link rel="stylesheet" href="./styles.css">
-    <!-- Ruta corregida al script JS -->
+    <!-- Ruta al script JS -->
     <script defer src="./script.js"></script>
 </head>
 <body>
     <header>
         <h1>Fotos Familiares</h1>
-        <p>Sube, visualiza y descarga tus momentos especiales</p>
+        <p>Visualiza y descarga tus momentos especiales</p>
     </header>
+
     <main>
-        <section id="upload-section">
-            <h2>Sube tus fotos</h2>
-            <form id="upload-form">
-                <!-- Etiqueta para accesibilidad -->
-                <label for="photo-input">Selecciona tus fotos:</label>
-                <input type="file" id="photo-input" accept="image/*" multiple>
-                <button type="button" id="upload-button">Subir Fotos</button>
-            </form>
-            <p id="upload-message"></p>
-        </section>
+        <!-- Sección de Galería -->
         <section id="gallery-section">
             <h2>Galería</h2>
             <div id="gallery" class="gallery">
-                <!-- Mensaje inicial de la galería -->
-                
+                <!-- Las imágenes se insertarán dinámicamente con JavaScript -->
             </div>
         </section>
     </main>
+
+ <!-- Contenedor para el lightbox -->
+<div id="lightbox" class="lightbox">
+    <span id="close-lightbox" class="close-btn">X</span>
+    <img id="lightbox-img" alt="Imagen ampliada">
+</div>
+
     <footer>
         <p>© 2024 Fotos Familiares. Todos los derechos reservados.</p>
     </footer>
