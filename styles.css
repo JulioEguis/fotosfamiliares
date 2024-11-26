@@ -115,12 +115,12 @@ main {
 /* Estilo para las imágenes de la galería */
 .gallery img {
     width: 100%;
-    height: auto;
+    height: 150px; /* Fijamos una altura uniforme */
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     cursor: pointer;
     transition: transform 0.3s, box-shadow 0.3s;
-    object-fit: cover;
+    object-fit: cover; /* Mantiene la proporción de la imagen y la recorta para llenar el contenedor */
 }
 
 .gallery img:hover {
@@ -164,13 +164,13 @@ footer p {
 
     .gallery img {
         max-width: 100%;
-        max-height: 150px;
+        height: 120px; /* Reducir la altura de las imágenes en móvil */
     }
 }
 
 @media (max-width: 480px) {
     .gallery img {
-        max-height: 120px;
+        height: 100px; /* Hacer las imágenes más pequeñas en pantallas más pequeñas */
     }
 
     #upload-section {
