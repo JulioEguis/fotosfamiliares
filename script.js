@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const gallery = document.getElementById('gallery');
-    const repoOwner = 'julioeguis'; // Tu nombre de usuario de GitHub
+    const repoOwner = 'JulioEguis'; // Tu nombre de usuario de GitHub
     const repoName = 'fotosfamiliares'; // Nombre del repositorio
     const folderPath = 'images'; // Carpeta donde están las imágenes
     const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${folderPath}`;
