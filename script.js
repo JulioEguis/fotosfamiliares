@@ -5,91 +5,94 @@ document.addEventListener('DOMContentLoaded', () => {
     const folderPath = 'images'; // Carpeta donde están las imágenes
     const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${folderPath}`;
 
- // Función para cargar imágenes desde el repositorio de GitHub
-const loadImagesFromGitHub = () => {
-    fetch(apiUrl)
-        .then(response => {
-            if (!response.ok) throw new Error('Error al conectar con GitHub API');
-            return response.json();
-        })
-        .then(data => {
-            data.forEach(item => {
-                // Filtrar archivos que sean imágenes JPEG o JPG (sin importar mayúsculas o minúsculas)
-                if (item.type === 'file' && (
-                    item.download_url.toLowerCase().endsWith('.jpeg') || 
-                    item.download_url.toLowerCase().endsWith('.jpg') || 
-                    item.download_url.toLowerCase().endsWith('.JPG')
-                )) {
-                    const img = document.createElement('img');
-                    img.src = item.download_url; // URL directa de la imagen
-                    img.alt = item.name; // Nombre del archivo como descripción
-                    img.classList.add('gallery-item'); // Clase para el estilo
-                    img.addEventListener('click', () => openLightbox(item.download_url)); // Añadir evento para el lightbox
-                    gallery.appendChild(img); // Añadir la imagen a la galería
-                }
+    let images = []; // Array para almacenar las URLs de las imágenes
+    let currentIndex = 0; // Índice de la imagen actualmente mostrada en el lightbox
+
+    // Función para cargar imágenes desde el repositorio de GitHub
+    const loadImagesFromGitHub = () => {
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) throw new Error('Error al conectar con GitHub API');
+                return response.json();
+            })
+            .then(data => {
+                data.forEach(item => {
+                    if (item.type === 'file' && (
+                        item.download_url.toLowerCase().endsWith('.jpeg') ||
+                        item.download_url.toLowerCase().endsWith('.jpg')
+                    )) {
+                        const img = document.createElement('img');
+                        img.src = item.download_url;
+                        img.alt = item.name;
+                        img.classList.add('gallery-item');
+                        img.addEventListener('click', () => openLightbox(images.indexOf(item.download_url)));
+                        gallery.appendChild(img);
+
+                        images.push(item.download_url); // Añadir la URL al array de imágenes
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Error al cargar las imágenes desde GitHub:', error);
             });
-        })
-        .catch(error => {
-            console.error('Error al cargar las imágenes desde GitHub:', error);
-        });
-};
+    };
 
-
-    // Función para abrir el lightbox
-    const openLightbox = (imageUrl) => {
+    // Función para abrir el lightbox en la posición del índice actual
+    const openLightbox = (index) => {
+        currentIndex = index;
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
-        lightbox.style.display = 'flex'; // Mostrar el lightbox
-        lightboxImg.src = imageUrl; // Establecer la URL de la imagen en el lightbox
+        lightbox.style.display = 'flex';
+        lightboxImg.src = images[currentIndex];
+        document.body.style.overflow = 'hidden'; // Desactivar scroll de la página
     };
 
     // Función para cerrar el lightbox
     const closeLightbox = () => {
         const lightbox = document.getElementById('lightbox');
-        lightbox.style.display = 'none'; // Ocultar el lightbox
+        lightbox.style.display = 'none';
+        document.body.style.overflow = ''; // Reactivar scroll de la página
     };
 
-    // Añadir evento para cerrar el lightbox al hacer clic en el fondo oscuro
+    // Función para mostrar la imagen siguiente en el lightbox
+    const showNextImage = () => {
+        currentIndex = (currentIndex + 1) % images.length;
+        document.getElementById('lightbox-img').src = images[currentIndex];
+    };
+
+    // Función para mostrar la imagen anterior en el lightbox
+    const showPrevImage = () => {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        document.getElementById('lightbox-img').src = images[currentIndex];
+    };
+
+    // Eventos para botones de navegación
+    document.getElementById('next-button').addEventListener('click', showNextImage);
+    document.getElementById('prev-button').addEventListener('click', showPrevImage);
+
+    // Evento para cerrar el lightbox al hacer clic en el fondo oscuro
     document.getElementById('lightbox').addEventListener('click', (e) => {
         if (e.target === document.getElementById('lightbox')) {
             closeLightbox();
         }
     });
 
-    // Añadir evento para el botón de cierre (X)
+    // Asignar el evento al botón de cierre (X)
     document.getElementById('close-lightbox').addEventListener('click', closeLightbox);
 
-    // Función para subir fotos localmente
-    const handleLocalUpload = () => {
-        const fileInput = document.getElementById('photo-input');
-        const files = fileInput.files;
-
-        if (files.length === 0) {
-            alert('Por favor selecciona fotos para subir.');
-            return;
+    // Habilitar scroll en el lightbox con las teclas
+    document.addEventListener('keydown', (e) => {
+        if (document.getElementById('lightbox').style.display === 'flex') {
+            if (e.key === 'ArrowRight') {
+                showNextImage();
+            } else if (e.key === 'ArrowLeft') {
+                showPrevImage();
+            } else if (e.key === 'Escape') {
+                closeLightbox();
+            }
         }
-
-        gallery.innerHTML = ''; // Limpia la galería antes de mostrar las imágenes subidas
-
-        Array.from(files).forEach(file => {
-            const reader = new FileReader();
-            reader.onload = e => {
-                const img = document.createElement('img');
-                img.src = e.target.result; // Genera una URL base64 para la imagen
-                img.alt = file.name; // Nombre del archivo local
-                img.classList.add('gallery-item');
-                img.addEventListener('click', () => openLightbox(e.target.result)); // Añadir evento para el lightbox
-                gallery.appendChild(img);
-            };
-            reader.readAsDataURL(file); // Convierte la imagen a URL base64
-        });
-
-        document.getElementById('upload-message').textContent = 'Fotos subidas localmente. Asegúrate de descargarlas.';
-    };
+    });
 
     // Inicialización de funcionalidades
-    loadImagesFromGitHub(); // Carga las imágenes desde el repositorio
-
-    // Asignar el evento al botón de subir fotos
-    document.getElementById('upload-button').addEventListener('click', handleLocalUpload);
+    loadImagesFromGitHub();
 });

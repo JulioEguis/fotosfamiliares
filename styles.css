@@ -185,61 +185,119 @@ footer p {
         font-size: 0.9rem;
     }
 }
-/* Estilo para el lightbox */
-.lightbox {
-    display: none; /* Inicialmente oculto */
+/* Estilo del lightbox */
+#lightbox {
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.8);
     justify-content: center;
     align-items: center;
-    z-index: 1000;
-    overflow: hidden;
+    z-index: 9999;
 }
 
-/* Estilo para el lightbox */
-.lightbox {
-    display: none; /* Inicialmente oculto */
+/* Contenedor del lightbox centrado */
+#lightbox-content {
+    position: relative; /* Referencia para posicionar elementos internos */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Estilo del lightbox */
+#lightbox {
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.8);
     justify-content: center;
     align-items: center;
-    z-index: 1000;
-    overflow: hidden;
+    z-index: 9999;
 }
 
-/* Imagen dentro del lightbox */
-.lightbox img {
+/* Estilo de la imagen dentro del lightbox */
+#lightbox img {
     max-width: 90%;
-    max-height: 90%;
-    border-radius: 10px;
-    transition: transform 0.3s ease-in-out; /* Transición para zoom */
-    position: relative; /* Para poder posicionar la "X" dentro de la imagen */
+    max-height: 80%;
+    position: relative;
+    z-index: 1;
 }
 
-/* Estilo para la X de cierre */
-.close-btn {
+/* Botón de cierre (X) en la esquina superior derecha de la imagen */
+#close-lightbox {
     position: absolute;
-    top: 10px; /* Espacio desde la parte superior */
-    right: 10px; /* Espacio desde el borde derecho */
-    font-size: 2rem;
-    color: #e90f0f;
-    background: rgba(0, 0, 0, 0.6);
-    padding: 5px 10px;
-    border-radius: 50%;
+    top: 10px;
+    right: 10px;
+    font-size: 50px;
+    color: rgb(125, 211, 12);
     cursor: pointer;
-    z-index: 1001; /* Asegura que la X esté encima de la imagen */
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+    padding: 5px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.close-btn:hover {
-    background: rgba(0, 0, 0, 0.8);
+#close-lightbox:hover {
+    background-color: rgba(255, 0, 0, 0.7); /* Cambio de color al pasar el mouse */
 }
 
+/* Botones de navegación (flechas) */
+#prev-button, #next-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 80px;
+    color: rgb(240, 48, 22);
+    background: none;
+    border: none;
+    cursor: pointer;
+    user-select: none;
+    z-index: 2;
+    padding: 10px;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+#prev-button:hover, #next-button:hover {
+    opacity: 1;
+}
+
+/* Flecha izquierda */
+#prev-button {
+    left: 10px;
+}
+
+/* Flecha derecha */
+#next-button {
+    right: 10px;
+}
+
+/* Estilo responsivo para móviles */
+@media (max-width: 768px) {
+    #lightbox img {
+        max-width: 95%;
+        max-height: 70%;
+    }
+
+    #close-lightbox {
+        font-size: 25px;
+        width: 35px;
+        height: 35px;
+    }
+
+    #prev-button, #next-button {
+        font-size: 30px;
+    }
+}
 
