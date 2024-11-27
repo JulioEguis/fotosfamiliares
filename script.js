@@ -5,30 +5,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const folderPath = 'images'; // Carpeta donde están las imágenes
     const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${folderPath}`;
 
-    // Función para cargar imágenes desde el repositorio de GitHub
-    const loadImagesFromGitHub = () => {
-        fetch(apiUrl)
-            .then(response => {
-                if (!response.ok) throw new Error('Error al conectar con GitHub API');
-                return response.json();
-            })
-            .then(data => {
-                data.forEach(item => {
-                    // Filtrar archivos que sean imágenes JPEG o JPG
-                    if (item.type === 'file' && (item.download_url.endsWith('.jpeg') || item.download_url.endsWith('.JPG'))) {
-                        const img = document.createElement('img');
-                        img.src = item.download_url; // URL directa de la imagen
-                        img.alt = item.name; // Nombre del archivo como descripción
-                        img.classList.add('gallery-item'); // Clase para el estilo
-                        img.addEventListener('click', () => openLightbox(item.download_url)); // Añadir evento para el lightbox
-                        gallery.appendChild(img); // Añadir la imagen a la galería
-                    }
-                });
-            })
-            .catch(error => {
-                console.error('Error al cargar las imágenes desde GitHub:', error);
+ // Función para cargar imágenes desde el repositorio de GitHub
+const loadImagesFromGitHub = () => {
+    fetch(apiUrl)
+        .then(response => {
+            if (!response.ok) throw new Error('Error al conectar con GitHub API');
+            return response.json();
+        })
+        .then(data => {
+            data.forEach(item => {
+                // Filtrar archivos que sean imágenes JPEG o JPG (sin importar mayúsculas o minúsculas)
+                if (item.type === 'file' && (
+                    item.download_url.toLowerCase().endsWith('.jpeg') || 
+                    item.download_url.toLowerCase().endsWith('.jpg') || 
+                    item.download_url.toLowerCase().endsWith('.JPG')
+                )) {
+                    const img = document.createElement('img');
+                    img.src = item.download_url; // URL directa de la imagen
+                    img.alt = item.name; // Nombre del archivo como descripción
+                    img.classList.add('gallery-item'); // Clase para el estilo
+                    img.addEventListener('click', () => openLightbox(item.download_url)); // Añadir evento para el lightbox
+                    gallery.appendChild(img); // Añadir la imagen a la galería
+                }
             });
-    };
+        })
+        .catch(error => {
+            console.error('Error al cargar las imágenes desde GitHub:', error);
+        });
+};
+
 
     // Función para abrir el lightbox
     const openLightbox = (imageUrl) => {

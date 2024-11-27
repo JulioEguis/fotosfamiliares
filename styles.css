@@ -200,35 +200,46 @@ footer p {
     overflow: hidden;
 }
 
+/* Estilo para el lightbox */
+.lightbox {
+    display: none; /* Inicialmente oculto */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    overflow: hidden;
+}
+
 /* Imagen dentro del lightbox */
 .lightbox img {
     max-width: 90%;
     max-height: 90%;
     border-radius: 10px;
     transition: transform 0.3s ease-in-out; /* Transición para zoom */
+    position: relative; /* Para poder posicionar la "X" dentro de la imagen */
 }
 
-/* Efecto de zoom al pasar el cursor sobre la imagen */
-.lightbox img:hover {
-    transform: scale(1.1); /* Zoom suave */
-}
-
-/* Botón de cierre (X) */
+/* Estilo para la X de cierre */
 .close-btn {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    font-size: 30px;
-    color: red;
+    top: 10px; /* Espacio desde la parte superior */
+    right: 10px; /* Espacio desde el borde derecho */
+    font-size: 2rem;
+    color: #e90f0f;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 5px 10px;
+    border-radius: 50%;
     cursor: pointer;
-    background-color: transparent;
-    border: none;
-    font-weight: bold;
-    z-index: 1100; /* Asegura que esté encima de la imagen */
+    z-index: 1001; /* Asegura que la X esté encima de la imagen */
 }
 
 .close-btn:hover {
-    color: white;
+    background: rgba(0, 0, 0, 0.8);
 }
 
 
